@@ -13,8 +13,8 @@ Put the code into the directory lua/ds_hotlink which is located in the root dire
 
 Add the config below to the http seg in nginx.conf:
 
-        lua_package_path "/u/nginx/lua/ds_hotlink/?.lua;;";
-        init_by_lua_file lua/ds_hotlink/init.lua;
+lua_package_path "/u/nginx/lua/ds_hotlink/?.lua;;";
+init_by_lua_file lua/ds_hotlink/init.lua;
 
 配置如下location用于获取访问key
 
@@ -30,13 +30,13 @@ Add the config below to /get_key location for geting access key
 
 Add the config below to a location which need to prevent hotlinking
 
-access_by_lua_file lua/ds_hotlink/refer.lua;
+        access_by_lua_file lua/ds_hotlink/refer.lua;
 
 或者配置如下
 
 Alternative config below
 
-access_by_lua_file lua/ds_hotlink/accesskey.lua;
+        access_by_lua_file lua/ds_hotlink/accesskey.lua;
 
 防盗链相关的配置在config.lua中，需要保证nginx的worker process对日志文件有读写权限
 

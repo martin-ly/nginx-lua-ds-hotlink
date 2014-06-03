@@ -13,8 +13,8 @@ Put the code into the directory lua/ds_hotlink which is located in the root dire
 
 Add the config below to the http seg in nginx.conf:
 
-lua_package_path "/u/nginx/lua/ds_hotlink/?.lua;;";
-init_by_lua_file lua/ds_hotlink/init.lua;
+        lua_package_path "/u/nginx/lua/ds_hotlink/?.lua;;";
+        init_by_lua_file lua/ds_hotlink/init.lua;
 
 配置如下location用于获取访问key
 

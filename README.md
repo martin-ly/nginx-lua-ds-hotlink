@@ -3,7 +3,7 @@ nginx-lua-ds-hotlink
 
 基于nginx和lua的防盗链系统
 
-A prevent hotlinking system based on nginx and lua
+A Prevent Hotlinking System based on nginx and lua
 
 将代码放在位于nginx根目录下的lua/ds_hotlink/下
 

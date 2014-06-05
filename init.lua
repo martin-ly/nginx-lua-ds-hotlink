@@ -16,8 +16,7 @@ local function log(args)
    local http_version=ngx.req.http_version()
    local header_refer=req_headers["Referer"] or "-"
    local key=ngx.var.arg_key or "-"
-   local line = "["..args.module_name.."] "..user_ip.." ["..time.."] \""..method.." "..request_uri.." "..http_version.."\" \""..user_agent.."\" \""..
-header_refer.."\" \""..key.."\"\n"
+   local line = "["..args.module_name.."] "..user_ip.." ["..time.."] \""..method.." "..request_uri.." "..http_version.."\" \""..user_agent.."\" \""..header_refer.."\" \""..key.."\"\n"
    fd:write(line)
    fd:flush()
 end
@@ -29,8 +28,12 @@ function hotlink_get_key()
     if not path then
         ngx.exit(405)
     end
+    local ip=ngx.var.arg_ip
+    if not ip then
+        ngx.exit(405)
+    end
     local time=ngx.now()
-    local string=time..path
+    local string=time..path..ip
     local digest = ngx.hmac_sha1(config.secret_key, string)
     ngx.say(ngx.encode_base64(time..":"..digest))
 end
@@ -60,7 +63,12 @@ function hotlink_accesskey_module()
         path=i
         break
     end
+    local user_ip=get_user_ip()
     local time_digest=ngx.decode_base64(key)
+    if not time_digest then
+        log{module_name="HOTLINK_ACCESSKEY_MODULE"}
+        ngx.exit(405)
+    end
     if not time_digest:match(":") then
         log{module_name="HOTLINK_ACCESSKEY_MODULE"}
         ngx.exit(405)
@@ -75,7 +83,7 @@ function hotlink_accesskey_module()
         log{module_name="HOTLINK_ACCESSKEY_MODULE"}
         ngx.exit(405)
     end
-    local string=time..path
+    local string=time..path..user_ip
     local real_digest = ngx.hmac_sha1(config.secret_key, string)
     if digest ~=real_digest then
         log{module_name="HOTLINK_ACCESSKEY_MODULE"}

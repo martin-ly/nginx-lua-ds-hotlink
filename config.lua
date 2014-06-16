@@ -7,6 +7,6 @@ white_domains={
     "geekhub\\.cc",
 }
 
-----access module----
+----accesskey module----
 secret_key="naudw72h2iu34298dnawi81"
 expiration_time=3600

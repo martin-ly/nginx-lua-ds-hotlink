@@ -1,7 +1,7 @@
 nginx-lua-ds-hotlink
 ====================
 
-基于nginx和lua的防盗链系统
+基于openresty/lua-nginx-module的防盗链系统
 
 A Prevent Hotlinking System based on openresty/lua-nginx-module
 
